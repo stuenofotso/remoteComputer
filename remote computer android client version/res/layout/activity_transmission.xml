@@ -1,0 +1,33 @@
+<LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android" android:weightSum="1">
+    <TextView android:id="@+id/textView1" android:text="Visualiser l'affichage de votre ordinateur sur votre mobile par reseau(wifi, lan)" android:layout_width="match_parent" android:layout_height="wrap_content"></TextView>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/linearLayout1">
+        <Button android:text="Commencer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/button1" android:layout_weight="0.13"></Button>
+
+        <EditText
+            android:id="@+id/clavier"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/images"
+            android:ems="10" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="frequence" >
+</TextView>
+
+        <EditText
+            android:id="@+id/frequence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:inputType="number" >
+</EditText>
+    </LinearLayout>
+    <EditText android:layout_width="match_parent" android:id="@+id/editText1" android:layout_height="wrap_content" android:inputType="textMultiLine">
+        <requestFocus></requestFocus>
+    </EditText>
+    <ImageView android:src="@drawable/ic_launcher" android:id="@+id/imageView1" android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="0.82"></ImageView>
+ 
+</LinearLayout>
