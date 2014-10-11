@@ -13,3 +13,7 @@ In other to croncretize this idea, I started by create an application client/ser
 I think this project can be much more than what it is now; so if you have any Idea or if you just want to correct what I've done; please feel free to perform this.
 
 Let's go!
+
+
+La documentation du projet est disponible et accessible via le lien 
+https://github.com/stuenofotso/remoteComputer/wiki
