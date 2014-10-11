@@ -1,8 +1,6 @@
 /*
  * This is a simple Android mobile client
- * This application read any string messege typed on the text field and
- * send it to the server when the Send button is pressed
- * Author by Lak J Comspace
+ * This application show desktop screen on android device
  */
  
 package com.polytech.remotecomputer;
