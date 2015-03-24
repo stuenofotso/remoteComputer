@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" android:background="@drawable/pilonne" android:weightSum="1">
+    <TextView android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/text_accueil" android:text="LA TOUR DE HANOI" android:textStyle="bold" android:layout_height="40dp" android:layout_width="match_parent" android:freezesText="true" android:gravity="center_horizontal" android:layout_weight="0.00"></TextView>
+    <LinearLayout android:id="@+id/layout_centre" android:orientation="vertical" android:layout_height="222dp" android:layout_width="105dp" android:layout_centerHorizontal="true" android:layout_marginTop="111dp"  android:drawingCacheQuality="high" android:gravity="center|bottom" android:layout_alignParentLeft="false" android:layout_alignParentRight="false" android:layout_alignWithParentIfMissing="false" android:layout_centerInParent="true" >
+        <ImageButton android:src="@drawable/disques" android:id="@+id/ImageButton01" android:layout_width="wrap_content" android:layout_height="20dp"></ImageButton>
+    </LinearLayout>
+    <TextView android:id="@+id/operation" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="Operation en Cours" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_below="@+id/text_accueil" android:layout_alignParentLeft="true" android:layout_alignParentRight="true" android:layout_above="@+id/dure_ecoule" android:textSize="10px"></TextView>
+    <ToggleButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ToggleButton" android:layout_below="@+id/layout_centre" android:layout_marginTop="15dp" android:id="@+id/deplace_gauche" android:layout_alignRight="@+id/layout_gauche" android:layout_alignParentLeft="true"></ToggleButton>
+    <ToggleButton android:layout_width="wrap_content" android:id="@+id/deplace_centre" android:layout_height="wrap_content" android:text="ToggleButton" android:layout_alignBaseline="@+id/deplace_gauche" android:layout_alignBottom="@+id/deplace_gauche" android:layout_alignLeft="@+id/layout_centre" android:layout_alignRight="@+id/layout_centre"></ToggleButton>
+    <ToggleButton android:layout_width="wrap_content" android:id="@+id/deplace_droite" android:layout_height="wrap_content" android:text="ToggleButton" android:layout_alignBaseline="@+id/deplace_centre" android:layout_alignBottom="@+id/deplace_centre" android:layout_alignLeft="@+id/layout_droite" android:layout_alignParentRight="true"></ToggleButton>
+    <Button android:layout_width="wrap_content" android:id="@+id/resoudre" android:text="Resoudre" android:layout_height="wrap_content" android:layout_below="@+id/deplace_centre" android:background="@drawable/hover" android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:layout_alignParentLeft="true"></Button>
+    <TextView android:textSize="30px" android:textColor="#FF0000" android:id="@+id/dure_ecoule" android:layout_height="wrap_content" android:text="nbre de deplacements: " android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_above="@+id/layout_gauche" android:layout_alignParentLeft="true"></TextView>
+    <LinearLayout android:layout_width="wrap_content" android:orientation="vertical" android:gravity="bottom|left" android:layout_height="wrap_content" android:id="@+id/layout_droite" android:layout_above="@+id/deplace_gauche" android:layout_toRightOf="@+id/layout_centre" android:layout_marginLeft="25dp" android:layout_alignTop="@+id/layout_centre">
+        <ImageButton android:id="@+id/ImageButton02" android:src="@drawable/disques" android:layout_width="wrap_content" android:layout_height="20dp"></ImageButton>
+    </LinearLayout>
+    <LinearLayout android:layout_width="wrap_content" android:orientation="vertical" android:gravity="bottom|right" android:layout_height="wrap_content" android:id="@+id/layout_gauche" android:layout_above="@+id/deplace_gauche" android:layout_toLeftOf="@+id/layout_centre" android:layout_marginRight="26dp" android:layout_alignTop="@+id/layout_centre">
+        <ImageButton android:id="@+id/disq" android:src="@drawable/disques" android:layout_width="wrap_content" android:layout_height="20dp"></ImageButton>
+    </LinearLayout>
+    
+</RelativeLayout>

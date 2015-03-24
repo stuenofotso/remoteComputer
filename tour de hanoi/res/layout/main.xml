@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1" android:background="@drawable/fond_acceuil">
+<TextView  
+    android:layout_width="fill_parent" 
+    android:text="@string/titre" android:gravity="center" android:capitalize="words"  android:layout_height="wrap_content" android:textColor="#000000" android:layout_weight="0.28" android:textSize="20px"/>
+<Button android:id="@+id/jouer" android:text="JOUER" android:layout_height="wrap_content" android:gravity="center" android:layout_weight="0.11" android:layout_width="match_parent"></Button>
+<Button android:id="@+id/reglage" android:text="Reglage" android:layout_height="wrap_content" android:layout_weight="0.12" android:layout_width="180dp"></Button>
+<Button android:id="@+id/aide" android:text="Informations/Aide" android:layout_height="wrap_content" android:layout_weight="0.12" android:layout_width="match_parent"></Button>
+</LinearLayout>

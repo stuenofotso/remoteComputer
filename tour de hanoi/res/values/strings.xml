@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, Main!</string>
+    <string name="app_name">Tour de hanoi</string>
+    <string name="titre">BIENVENUE AU CASSE TETE QUI TETE: LA TOUR DE HANOI serez vous à la hauteur...</string>
+    <string name="aide">La tour de hanoi est un jeu de reflexion et de stratégie qui consiste à déplacer tous les disques de gauche vers le milieu en se servant du conteneur droit. Cependant, il faut pas deposer un disque plus lourd sur un autre moins lourd. pour jouer, selectionnez le conteneur du disque à déplacer puis celui où vous souhaitez le deplacer.</string>
+</resources>
