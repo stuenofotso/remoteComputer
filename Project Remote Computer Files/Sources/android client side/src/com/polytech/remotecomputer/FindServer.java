@@ -66,7 +66,12 @@ public class FindServer extends Activity  {
 			@Override
 			public void onClick(View v) {
 				
+				try{
 				ip = displaySelected.getText().toString().substring(0, displaySelected.getText().toString().indexOf('|'));
+				}catch(Exception e){
+					Log.e("error", "erreur: "+e.getMessage());
+					ip = "";
+				}
 				
 				Intent data = new Intent();
 				data.putExtra("ip", ip);
