@@ -1,0 +1,40 @@
+PROJET RETRANSMISSION ECRAN PC ANDROID 
+Ce projet viens repondre à une problématique importante: comment maintenir une surveillance continue
+des informations affichées sur son écran d'ordinateur tout en ayant une mobilité optimale?
+Android nous donne la réponse à celà en mettant à notre disposition un outil intelligent 
+nous permettant d'étendre les possibilités qui nous sont offertes.
+
+Le projet consiste en la conception d'une suite d'outils permettant de visualiser toute ou
+partie d'un ecran d'ordinateur en temps réelle sur son mobile android par une connection(wifi, lan, ...).
+
+Il est constitué actuellement d'une application java qui permet de lancer le serveur et
+d'une application android à installer sur son mobile permettant de visualiser le rendu, c'est à dire
+de voir les informations affichées sur la partie désirée de son écran sur son équipement android.
+
+
+INSTALLATION:
+
+Installer l'apk du client launch android client.apk présent dans le sous dossier binary 
+sur l'équipement android
+s'assurer de posseder sur son ordinateur une JRE de version supérieure ou égale à 1.7
+
+
+FONCTIONNEMENT:
+Lancer l'executable jar: launch java server retransmission.jar qui se retrouve dans le sous dossier
+binary. Deux fenêtres apparaissent; une qui permet de dessiner la zone de l'écran que l'on souhaite
+surveiller et l'autre présentant le rendu qui va s'afficher sur l'ecran de l'equipement android.
+
+Note le port 9999 devrait être libre.
+
+Lancer le programme sur son équipement android et vérifier que le port d'écoute affiché
+est bien celui de la machine sur lequel est lancé le serveur(une connection sans fils ou autre
+devrait exister entre le serveur et le client android.).
+ 
+Positionner la fréquence de capture et cliquez sur commencer pour demarrer la capture.
+
+Le rendu s'affiche.
+
+NB: vous pouvez pauser la capture en cliquant sur le bouton arreter.
+
+TUENO FOTSO STEVE JEFFREY ECOLE NATIONALE SUPERIEURE POLYTECHNIQUE 3GI 76 57 17 28
+Email: stuenofotso@gmail.com
