@@ -27,11 +27,13 @@ import javax.swing.JLabel;
 
 
 public class main {
-	private static int SERVER_PORT = 9999, SERVER_PORT_DHCP = 9994, SERVER_PORT1 = 9998;
+	private static int SERVER_PORT = 9999, SERVER_PORT_DHCP = 9994, SERVER_PORT1 = 9998,  portInit = 9950;;
 	static Socket socket1;
 
     private static ServerSocket server1;
     static DatagramSocket socket, socket_DHCP;
+    static DatagramSocket[] sockets;
+    static Thread[] threads;
     static BufferedImage bi;
     private static ObjectInputStream ois;
     private static float[] point;
@@ -39,7 +41,15 @@ public class main {
     private static JFrame pan;
     private static Robot robot;
     private static float x1, y1;
-    private static int TAILLE_MAX = 60000, frequence=50;
+    private static int TAILLE_MAX = 20000, frequence=50;
+    
+    static byte[] receiveData, sendData;
+    static DatagramPacket paquetRetour, paquetRecu;
+    static String requete;
+    static InetAddress IPAddress;
+    static byte[] by;
+    static int nbre;
+    static  byte[][] fragments;
 	/**
 	 * @param args
 	 */
@@ -316,22 +326,23 @@ public static void attendreRequete(int port)
 }
 
 
+
 public static void sendFile(int port)
 {
 	
 	// On initialise les trames qui vont servir à recevoir et envoyer les paquets
-	byte[] receiveData = new byte[1024], sendData;
-	DatagramPacket paquetRetour;
+	receiveData = new byte[1024];
+	
 	// Tant qu'on est connecté, on attend une requête et on y répond
-	while (socket_DHCP != null && !socket_DHCP.isClosed())
+	while (socket != null && !socket.isClosed())
 	{
 
 		try{
 
-			DatagramPacket paquetRecu = new DatagramPacket(receiveData, receiveData.length);
+			 paquetRecu = new DatagramPacket(receiveData, receiveData.length);
 			socket.receive(paquetRecu);  //j'attends qu'il m'envoit une demande d'image
-			String requete = new String(paquetRecu.getData());
-			InetAddress IPAddress = paquetRecu.getAddress();
+			 requete = new String(paquetRecu.getData());
+			 IPAddress = paquetRecu.getAddress();
 //			if (requete.contains("oh serveur, envoit moi une image"))
 //			{
 //				byte[] by = imageToByteArray(bi);
@@ -354,35 +365,51 @@ public static void sendFile(int port)
 			
 			if (requete.contains("oh serveur, envoit moi une image"))
 			{
-				byte[] by = imageToByteArray(bi);
+				 by = imageToByteArray(bi);
 				
-				int nbre = (int) Math.ceil((double)by.length/TAILLE_MAX);
+				 nbre = (int) Math.ceil((double)by.length/TAILLE_MAX);
+				
 				
 				sendData  =new byte[nbre];
 				paquetRetour = new DatagramPacket(sendData, sendData.length, IPAddress, port);
 				socket.send(paquetRetour);
-				try {
-					Thread.sleep(frequence);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			
-				int i=0;
-				for(byte[] bb: fragment(by, nbre)){
-					 paquetRetour = new DatagramPacket(bb, bb.length, IPAddress, port);
-					 socket.send(paquetRetour);
-					 i++;
-					 if(i%2==0){
-						 try {
-								Thread.sleep(frequence);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+				fragment(by, nbre);
+				
+				if(nbre>1){
+					threads = new Thread[nbre-1];
+					sockets = new DatagramSocket[nbre-1];
+					
+					for(int i=0; i<nbre-1; i++){
+						final int j = i;
+						threads[i] = new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								
+								// TODO Auto-generated method stub
+								try {
+									sockets[j] = new DatagramSocket(portInit+j);
+									sockets[j].send(new DatagramPacket(fragments[j+1], fragments[j+1].length, IPAddress, portInit+j));
+									sockets[j].close();
+								} catch (SocketException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}
-					 }
-					 
+						});
+						threads[i].start();
+					}
 				}
+				
+				
+				
+			
+				
+					 socket.send(new DatagramPacket(fragments[0], fragments[0].length, IPAddress, port));
+					
 				
 				try {
 					Thread.sleep(frequence);
@@ -406,9 +433,9 @@ public static void sendFile(int port)
 	}
 }
 
-public static byte[][] fragment(byte[] tab, int nbre){
+public static void fragment(byte[] tab, int nbre){
 	
-	byte[][] fragments = new byte[nbre][];
+	 fragments = new byte[nbre][];
 	int i=0, lue = 0;
 	byte[] temp;
 	while(tab.length-lue>TAILLE_MAX){
@@ -424,7 +451,6 @@ public static byte[][] fragment(byte[] tab, int nbre){
 		fragments[i][TAILLE_MAX] = new Integer(i).byteValue();
 		i++;
 	}
-	return fragments;
 }
  
 

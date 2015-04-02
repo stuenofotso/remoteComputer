@@ -58,11 +58,23 @@ private DatagramSocket client;
  private Button button;
  private ImageView imv;
  boolean flag = false, flag1 = false;
- int taille=0, frequence = 100;
+ int taille=0, frequence = 150;
  private Thread t ;
  private static InputMethodManager imm;
  private static int SERVER_PORT = 9999;
- private static int TAILLE_MAX = 60000;
+ private static int TAILLE_MAX = 20000;
+ 
+ static DatagramSocket[] sockets;
+ static Thread[] threads;
+ static int portInit = 9950;
+ 
+ static SparseArray<byte[]> hasFragments;
+ 
+ String requete, requeteRecu;
+ DatagramPacket packet;
+ byte[] buf;
+ int size;
+ ByteArrayOutputStream outputStream;
 
  
  
@@ -320,34 +332,83 @@ private DatagramSocket client;
      }
   };
   
-  
+ 
  
  public void charge() throws SocketException{
 	 client = new DatagramSocket(SERVER_PORT);
-	 String requete ="oh serveur, envoit moi une image";
+	  requete ="oh serveur, envoit moi une image";
 	 while(flag){
 		 
 	    try {
-	    	String ip = textField.getText().toString();
+	    	 ip = textField.getText().toString();
 	    	frequence = Integer.parseInt(textField1.getText().toString());
 	    	
-	    	DatagramPacket packet = new DatagramPacket(requete.getBytes(), requete.length(), new InetSocketAddress(ip, SERVER_PORT));
+	    	 packet = new DatagramPacket(requete.getBytes(), requete.length(), new InetSocketAddress(ip, SERVER_PORT));
 	    	client.send(packet);
 	    	
 	    	
 	    	
-	    	byte[] buf = new byte[1024];
+	    	buf = new byte[1024];
 			packet = new DatagramPacket(buf, buf.length);
 			client.receive(packet);
-			String requeteRecu = new String(packet.getData());
+			 requeteRecu = new String(packet.getData());
 			
 	    	
 			try{
-				int size = packet.getLength();
+				 size = packet.getLength();
 				Log.e("longueur reçu", "longueur: "+size);
 				
-				SparseArray<byte[]> hasFragments = new SparseArray<byte[]>(size);
-				for(int i=0; i<size; i++){
+				 hasFragments = new SparseArray<byte[]>(size);
+				
+				if(size>1){
+					threads = new Thread[size-1];
+					sockets = new DatagramSocket[size-1];
+					
+					for(int i=0; i<size-1; i++){
+						final int j = i;
+						threads[i] = new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								
+								byte[] tBuf = new byte[TAILLE_MAX+1];
+								
+									try {
+										sockets[j] = new DatagramSocket(portInit+j);
+										sockets[j].setSoTimeout(100);
+										
+										sockets[j].receive(new DatagramPacket(tBuf, tBuf.length));
+										
+										
+										
+									} catch (Exception e) {
+										// TODO Auto-generated catch block
+										Log.e("erreur contenu", "erreur:  "+e.getMessage());
+									} 
+									finally{
+										if(sockets[j]!=null){
+											sockets[j].close();
+										}
+									}
+									
+									
+									
+									
+									
+									
+									int no =Byte.valueOf(tBuf[TAILLE_MAX]).intValue() ;
+									if(hasFragments.indexOfKey(no)<0){
+										hasFragments.put(no, tBuf);
+									}
+									
+								
+							}
+						});
+						threads[i].start();
+					}
+				}
+				
+				
 					buf = new byte[TAILLE_MAX+1];
 					packet = new DatagramPacket(buf, buf.length);
 					
@@ -358,19 +419,15 @@ private DatagramSocket client;
 					
 					
 					int no =Byte.valueOf(packet.getData()[TAILLE_MAX]).intValue() ;
-					Log.e("dans la boucle for", "no a pour valeur: "+no);
 					if(hasFragments.indexOfKey(no)<0){
 						hasFragments.put(no, packet.getData());
 					}
-					else{
-						break;
-					}
-					}
-				Log.e("sortie de la boucle for", "bonne sortie de la boucle for");
+					
+					
+					Thread.sleep(frequence);
 					
 				buf = reconstruitTab(hasFragments);
 				receiveFile(buf);
-		         Thread.sleep(frequence);
 				
 			}catch(NumberFormatException e){
 				Log.e("erreur requete taille", "erreur: "+requeteRecu+" "+e.getMessage());
@@ -400,7 +457,7 @@ private DatagramSocket client;
  }
  
  private byte[] reconstruitTab(SparseArray<byte[]> hasFragments) throws IOException {
-	ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+	 outputStream = new ByteArrayOutputStream( );
 	
 	Log.e("dans reconstruit", "taille: "+hasFragments.size());
 	for(int i=0; i<hasFragments.size(); i++){
