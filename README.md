@@ -18,6 +18,25 @@ remote computer is a project started because I think that all what we need from 
 
 In other to croncretize this idea, I started by create an application client/server in java and android which can permit to everybody everywhere to manage his computer (see what is displayed on the screen, hear sound, use the mouse and the keyboard) from android terminal.
 
+
+Functional and non-Functional features:
+-	Use of UDP Protocol to automatic locate Remote Computer Server and to send data which means fast and faster transmissions.
+-	Automatic Server location
+-	You can select the computer screen area to display directly from the android application and change intuitively ( by sliding your finger on the screen )
+-	You can increase or decrease the zoom on an item in the capture area. (e.g. select a text box and zoom to read clearly )
+-	You can right click or left click
+-	you can hear your Computer speakers directly onto your mobile while viewing and handling the keyboard and mouse devices
+-	Give your tips, comments, criticisms and issues with the community of users directly through the application.
+-	 Capture unique moments through screenshots.
+-	handle mouse scroll (use volume up and down button)
+-	drag and drop components
+-	shutdown server computer
+-	restart server computer
+-	shutdown server application
+-	restart server application
+-	…
+
+
 I think this project can be much more than what it is now; so if you have any Idea or if you just want to correct what I've done; please feel free to perform this.
 
 Let's go!
