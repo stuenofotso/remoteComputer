@@ -20,6 +20,7 @@ In other to croncretize this idea, I started by create an application client/ser
 
 
 Functional and non-Functional features:
+
 -	Use of UDP Protocol to automatic locate Remote Computer Server and to send data which means fast and faster transmissions.
 -	Automatic Server location
 -	You can select the computer screen area to display directly from the android application and change intuitively ( by sliding your finger on the screen )
@@ -29,6 +30,7 @@ Functional and non-Functional features:
 -	Give your tips, comments, criticisms and issues with the community of users directly through the application.
 -	 Capture unique moments through screenshots.
 -	handle mouse scroll (use volume up and down button)
+-	Take an image through your smartphone and save it directly to your PC
 -	drag and drop components
 -	shutdown server computer
 -	restart server computer
