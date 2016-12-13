@@ -1,0 +1,147 @@
+/*!
+ * Name: 	Infinity
+ * Version: 1.0
+ * Updated: 28/05/2015
+ * Website:	http://audaindesigns.com
+ * Author:	Audain Designs
+ * Type:	Style - Devices
+ */
+
+/*-----------------------
+	iPhone 6
+------------------------*/
+.device-container.iphone-space-grey {
+	background: url('../../img/devices/iphone/6sg.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.iphone-silver {
+	background: url('../../img/devices/iphone/6s.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.iphone-gold {
+	background: url('../../img/devices/iphone/6g.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.i6 .device-container-inner{
+	width: 294px;
+	top: 81px;
+	left: 28px;
+}
+@media (max-width: 1199px) {
+	.device-container.i6 .device-container-inner{
+		width: 249px;
+		top: 68px;
+		left: 18px;
+	}
+}
+@media (max-width: 991px) {
+	.device-container.i6 .device-container-inner{
+		width: 206px;
+		top: 58px;
+		left: 62px;
+	}
+}
+@media (max-width: 767px) {
+	.device-container.i6 .device-container-inner{
+		width: 100%;
+		top: 0;
+		left: 0;
+	}
+}
+.device-container.i6 .owl-theme .owl-controls {
+	margin-top: 100px;
+}
+
+/*-----------------------
+	iPhone 5c
+------------------------*/
+.device-container.iphone-5c-red {
+	background: url('../../img/devices/iphone/5c-red.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.iphone-5c-blue {
+	background: url('../../img/devices/iphone/5c-blue.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.iphone-5c-green {
+	background: url('../../img/devices/iphone/5c-green.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.iphone-5c-yellow {
+	background: url('../../img/devices/iphone/5c-yellow.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.iphone-5c-white {
+	background: url('../../img/devices/iphone/5c-white.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.i5c .device-container-inner{
+	width: 245px;
+	top: 123px;
+	left: 54px;
+}
+@media (max-width: 1199px) {
+	.device-container.i5c .device-container-inner{
+		width: 208px;
+		top: 105px;
+		left: 39px;
+	}
+}
+@media (max-width: 991px) {
+	.device-container.i5c .device-container-inner{
+		width: 174px;
+		top: 87px;
+		left: 79px;
+	}
+}
+@media (max-width: 767px) {
+	.device-container.i5c .device-container-inner{
+		width: 100%;
+		top: 0;
+		left: 0;
+	}
+}
+.device-container.i5c .owl-theme .owl-controls {
+	margin-top: 100px;
+}
+
+/*-----------------------
+	iPad Air 2
+------------------------*/
+
+/*-----------------------
+	Nokia Lumia 930
+------------------------*/
+.device-container.nokia-l-930 {
+	background: url('../../img/devices/nokia/l-930.png') no-repeat center top;
+	background-size: contain;
+}
+.device-container.nl9 .device-container-inner{
+	width: 267px;
+	top: 90px;
+	left: 41px;
+}
+@media (max-width: 1199px) {
+	.device-container.nl9 .device-container-inner{
+		width: 227px;
+		top: 76px;
+		left: 28px;
+	}
+}
+@media (max-width: 991px) {
+	.device-container.nl9 .device-container-inner{
+		width: 189px;
+		top: 63px;
+		left: 70px;
+	}
+}
+@media (max-width: 767px) {
+	.device-container.nl9 .device-container-inner{
+		width: 100%;
+		top: 0;
+		left: 0;
+	}
+}
+.device-container.nl9 .owl-theme .owl-controls {
+	margin-top: 100px;
+}

@@ -1,0 +1,78 @@
+/*!
+ * Name: 	Infinity
+ * Version: 1.0
+ * Updated: 28/05/2015
+ * Website:	http://audaindesigns.com
+ * Author:	Audain Designs
+ * Type:	Style - Push Menu
+ */
+ .push-menu-container {
+	position: absolute;
+	top: 30px;
+	left: 30px;
+ }
+ .navbar-default {
+	background-color: transparent;
+	border-color: transparent;
+}
+.navbar-toggle {
+	display:block;
+	float:left;
+}
+button.navbar-toggle{
+	margin: 0;
+	top: 1px;
+	border:0;
+}
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+	background:transparent;
+	border:0;
+}
+.push-wrapper:focus, .push-wrapper:hover {
+	opacity:0.8;
+}
+.navbar-default .navbar-toggle {
+	border-color: transparent;
+}
+.navbar-default span.menu-text {
+	position:relative;
+	top: 7px;
+	font-weight: 600;
+	letter-spacing: 3px;
+	color: #FFF;
+}
+
+/*Side Menu*/
+.navmenu-default, .navbar-default .navbar-offcanvas {
+	background-color:#45525E;
+	border:0;
+}
+.push-menu-title span {
+	display: block;
+	padding: 10px;
+	font-weight: 700;
+	font-size: 30px;
+	letter-spacing: 3px;
+}
+ul.pm-title {
+	border-bottom: 1px solid #56626D;
+	margin-top: 15px;
+	padding-bottom: 15px;
+}
+.push-menu-items .push-menu-item a {
+	color:#CDCDCD;
+	display: block;
+	padding: 10px;
+	font-weight: 500;
+	font-size: 13px;
+	text-transform:uppercase;
+	text-decoration:none;
+}
+.push-menu-items .push-menu-item a:hover, .push-menu-items .push-menu-item a:focus {
+	color:#FFF;
+	background:rgba(255, 255, 255, 0.2);
+}
+.push-menu-items .push-menu-item.active a {
+	color:#FFF;
+	background:rgba(255, 255, 255, 0.1);
+}

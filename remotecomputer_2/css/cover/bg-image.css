@@ -1,0 +1,102 @@
+/*!
+ * Name: 	Infinity
+ * Version: 1.0
+ * Updated: 28/05/2015
+ * Website:	http://audaindesigns.com
+ * Author:	Audain Designs
+ * Type:	Style - Cover - BG Image
+ */
+
+/*-----------------------
+	Background Colour
+------------------------*/
+section#cover {
+	background: url('../../img/bg.jpg');
+	background-size: cover;
+	background-position: center;
+}
+.menu-button {
+	display:none;
+}
+
+/*-----------------------
+	Push Menu
+------------------------*/
+.infinity {
+	background: #4C5664;
+}
+.menu-wrap a {
+	color: #A6A6A6;
+}
+ul.cover-available-on-menu li {
+	color:#FFF;
+}
+
+/*-----------------------
+	Left Column
+------------------------*/
+.cover-heading {
+	color:#70E5E5;
+}
+.cover-text {
+	color:#FFF;
+}
+.cover-quote {
+	color:#FFF;
+}
+
+/*-----------------------
+	Right Column
+------------------------*/
+.cover-availability, .app-availability i.fa  {
+	color:#FFF;
+}
+a.btn-store {
+	background: rgba(255, 255, 255, 0.5);
+	border: 2px solid #FFFFFF;
+}
+.cover-available-on {
+	background-color: rgba(0, 0, 0, 0.25);
+}
+/*-----------------------
+	Bottom Central Column
+------------------------*/
+.cover-app-title {
+	color:#70E5E5;
+}
+.cover-app-text {
+	background-color: rgba(0, 0, 0, 0.35);
+	color:#FFF;
+}
+.cover-footer-social a {
+	background: rgba(112, 229, 229, 0.5);
+	border: 2px solid #70E5E5;
+}
+.cover-copyright {
+	color:#FFF;
+}
+a.btn-enter {
+	background-color: rgba(112, 229, 229, 0.5);
+	border: 2px solid #70E5E5;
+	color:#FFF;
+}
+a.btn-enter:hover, .btn-enter:focus {
+	color:#FFF;
+}
+/*-----------------------
+	Owl Caousel
+------------------------*/
+.device-container .owl-theme .owl-controls .owl-page.active span, .owl-theme .owl-controls.clickable .owl-page:hover span {
+	background:#8CD5D5;
+}
+.device-container .owl-theme .owl-controls .owl-page span {
+	background:#fff;
+}
+
+/*-----------------------
+	Click feedback
+------------------------*/
+.cbutton--effect-ivana::before,
+.cbutton--effect-ivana::after {
+	box-shadow: 0 0 0 2px rgba(112, 229, 229, 0.5);
+}

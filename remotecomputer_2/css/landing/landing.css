@@ -1,0 +1,291 @@
+/*!
+ * Name: 	Infinity
+ * Version: 1.0
+ * Updated: 28/05/2015
+ * Website:	http://audaindesigns.com
+ * Author:	Audain Designs
+ * Type:	Style - Landing - Landing
+ */
+
+/*-----------------------
+	Sections
+------------------------*/
+section#landing {
+	background: url('../../img/bg.jpg');
+	background-size: cover;
+	background-position: center;
+}
+.grey {
+	background:#F7F7F7;
+}
+.cta {
+	background:url('../../img/landing/landing-bg.png');
+	background-size: cover;
+	background-position: center;
+}
+#testimonials {
+	background:url('../../img/landing/testimonial-bg.jpg');
+	background-size: cover;
+	background-position: center;
+	color: #fff;
+}
+#subscribe {
+	color:#fff;
+	background-color: #70E5E5;
+}
+#video {
+	color:#fff;
+}
+#contact {
+	background:url('../../img/landing/contact-bg.jpg');
+	background-size: cover;
+	background-position: center;
+	color: #fff;
+
+}
+#footer {
+	background-color: #45525E;
+	color: #fff;
+}
+/*-----------------------
+	Title Attributes
+------------------------*/
+.section-title::after {
+	background: #333;
+}
+.section-title:hover span {
+	color: transparent;
+}
+.section-title span::after {
+	color: #fff;
+}
+section:hover span.section-light.section-title {
+	color:#FFF;
+}
+section:hover span.section-dark.section-title {
+	color:#333;
+}
+#testimonials:hover span.section-title, #contact:hover span.section-title {
+	color:#FFF;
+}
+.sub-title-top {
+	color:#333;
+}
+.sub-title-bottom {
+	color: #747474;
+}
+.overview-title {
+	color: #333;
+}
+.overview-text {
+	color: #747474;
+}
+
+/*-----------------------
+	Call To Action
+------------------------*/
+#cta span,#cta h2 {
+	color:#fff;
+}
+
+/*-----------------------
+	Push Menu
+------------------------*/
+.push-menu-button {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
+}
+.navbar-default span.menu-text {
+	color:#fff;
+}
+.navmenu-default, .navbar-default .navbar-offcanvas {
+	background-color: #45525E;
+}
+.push-menu-title span {
+	color:#70E5E5;
+}
+li.push-menu-social-item i.fa, li.footer-social-item i.fa {
+	background-color: #56626D;
+}
+.push-menu-items .push-menu-item a {
+	color: #CDCDCD;
+}
+li.push-menu-social-item a:hover, li.push-menu-social-item a:focus, li.footer-social-item a:hover, li.footer-social-item a:focus {
+	color:#FFF;
+}
+.available-on-menu  {
+	color:#FFF;
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+/*-----------------------
+	Landing Header
+------------------------*/
+.landing-heading {
+	color:#70E5E5;
+}
+.landing-text {
+	color:#FFF;
+}
+.landing-availability, .app-availability i.fa  {
+	color:#FFF;
+}
+.landing-available-on {
+	background-color: transparent;
+}
+@media (max-width: 767px) {
+	.landing-heading, .landing-text {
+		text-align:center;
+	}
+}
+
+/*-----------------------
+	Features
+------------------------*/
+.app-feature-box .icon-box {
+	color: #70E5E5;
+	border: 2px solid #70E5E5;
+	background-color: rgba(0, 0, 0, 0.01);
+}
+.app-feature-box:hover .icon-box {
+	background: #70E5E5;
+	color: #FFF;
+}
+.app-feature-box .icon-box:after {
+	box-shadow: 0 0 0 4px #70E5E5;
+}
+@media (max-width: 767px) {
+	.app-feature-box {
+		margin:30px 0px;
+	}
+}
+.overview-icon-box i.fa {
+	background-color: #70E5E5;
+	color: #fff;
+}
+
+/*-----------------------
+	Icons
+------------------------*/
+.feature-extra-list i.fa {
+	color: #70E5E5;
+	border: 2px solid #70E5E5;
+}
+
+/*-----------------------
+	Gallery
+------------------------*/
+.item-clickable a img {
+	border: 5px solid #70E5E5;
+}
+
+/*-----------------------
+	Testimonails
+------------------------*/
+.testimonial-box {
+	max-width: 800px;
+	margin: auto;
+	padding: 10px;
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+}
+.testimonial-box .testimonial-text {
+	color: #FFF;
+}
+.testimonial-box .testimonial-img img {
+	padding: 5px;
+	box-shadow: 0 0 0 2px;
+	border: 1px solid;
+}
+
+/*-----------------------
+	Subscribe
+------------------------*/
+#subscribe .form-control {
+	position: absolute;
+	height: 50px;
+	border: 0;
+	border-radius: 15px;
+	padding: 10px 20px;
+}
+#subscribe .input-group {
+	max-width: 800px;
+	margin: 0 auto;
+	padding-bottom:40px;
+}
+#subscribe .input-group-btn {
+	z-index: 100;
+}
+#subscribe .input-group-btn button#subscribe-submit {
+	color: #70E5E5;
+	background-color: transparent;
+}
+#subscribe .input-group-btn button#subscribe-submit {
+	width: 60px;
+	font-size: 22px;
+	padding: 12px;
+	border: 0;
+}
+#subscribe span {
+	max-width: 800px;
+	margin: 0 auto;
+	display: inline-block;
+}
+
+/*-----------------------
+	Owl Caousel
+------------------------*/
+.owl-theme .owl-controls .owl-page span, .device-container .owl-theme .owl-controls .owl-page.active span, .owl-theme .owl-controls.clickable .owl-page:hover span {
+	background:#70E5E5;
+}
+.device-container .owl-theme .owl-controls .owl-page span {
+	background:#fff;
+}
+.owl-theme .owl-controls .owl-buttons div {
+  position: absolute;
+}
+.owl-theme .owl-controls .owl-buttons div {
+	background-color: transparent;
+	font-size: 25px;
+} 
+.owl-theme .owl-controls .owl-buttons .owl-prev{
+	left: -60px;
+	top: 50%;
+	margin-top: -10px;
+} 
+.owl-theme .owl-controls .owl-buttons .owl-next{
+	right: -60px;
+	top: 50%;
+		margin-top: -10px;
+}
+.owl-theme .owl-controls .owl-buttons div {
+	color: #70E5E5;
+}
+
+/*-----------------------
+	Click feedback
+------------------------*/
+.cbutton--effect-ivana::before,
+.cbutton--effect-ivana::after {
+	box-shadow: 0 0 0 2px rgba(112, 229, 229, 0.5);
+}
+
+/*-----------------------
+	Buttons
+------------------------*/
+a.btn-store {
+	background: rgba(255, 255, 255, 0.5);
+	border: 2px solid #FFFFFF;
+}
+.btn-primary {
+	background-color: rgba(69, 82, 94, 0.85);
+	border: 2px solid #45525E;
+}
+.btn-submit {
+	background-color: rgba(68, 157, 68, 0.5);
+	border: 2px solid #449d44;
+	color: #FFFFFF;
+	font-weight: 700;
+}
